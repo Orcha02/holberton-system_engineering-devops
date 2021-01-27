@@ -1,2 +1,2 @@
 #!/bin/bash
-betty cd holberton
+mv /tmp/betty /tmp/holberton/betty
