@@ -1,2 +1,2 @@
 #!/bin/bash
-chown betty
+usermod -l 1000 betty
