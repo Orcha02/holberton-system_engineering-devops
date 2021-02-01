@@ -1,2 +1,2 @@
 #!/bin/bash
-$ wc -l PATH
+find /directory/ -PATH -type d -print| wc -l
