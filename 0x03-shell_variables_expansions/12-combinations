@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e {a..z}{a..z}'\n'| cut -c 2-| grep -v "oo"
+echo -e {a..z}{a..z}'\n'| cut -c 2-| grep -v "oo" | tail -303 | head -10
