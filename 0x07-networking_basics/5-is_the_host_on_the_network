@@ -6,3 +6,6 @@ then
 else
     ping -c 5 "$1"
 fi
+
+# $1-> Equivalent to argv[1]
+# -c-> count
