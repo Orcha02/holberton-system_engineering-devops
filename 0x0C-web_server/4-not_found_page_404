@@ -16,8 +16,9 @@ new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
 sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" $f_config
 
 # Add 404 redirection (Configure your Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page')
-echo "Ceci n'est pas une page" > /var/www/html/status404.html
-sudo sed -i '/listen 80 default_server;/a error_page 404 /status404.html;' $f_config
+location_error404="/status404.html {root /usr/share/nginx/html;\n internal;}"
+sudo echo "Ceci n'est pas une page" > /var/www/html/status404.html
+sudo sed -i '/listen 80 default_server;/a error_page 404 /status404.html; location = $location_error404' $f_config
 
 # Start server
 sudo service nginx restart
