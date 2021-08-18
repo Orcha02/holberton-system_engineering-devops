@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Configure Nginx server so that /redirect_me is redirecting to another page.
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Configurate server (Firewall port 80)
+sudo ufw allow 'Nginx HTTP'
+f_config="/etc/nginx/sites-available/default"
+# Create default page
+sudo rm /var/www/html/*
+sudo echo "Holberton School" | sudo tee /var/www/html/index.html
+
+# Add redirection
+new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" /etc/nginx/sites-available/default
+
+# Add 404 redirection (Configure your Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page')
+sudo echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/error404.html
+error404="error404.html"
+l_error404="/error404.html {root /usr/share/nginx/html;\n internal;}"
+sudo sed -i "/listen 80 default_server/a error_page 404 /$error404; location = $l_error404" $f_config
+
+# Start server
+sudo service nginx restart

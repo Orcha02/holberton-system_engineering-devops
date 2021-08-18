@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configure Nginx server so that /redirect_me is redirecting to another page.
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Configurate server (Firewall port 80)
+sudo ufw allow 'Nginx HTTP'
+
+# Create default page
+sudo rm /var/www/html/*
+sudo echo "Holberton School" | sudo tee /var/www/html/index.html
+
+# Redirection
+new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" /etc/nginx/sites-available/default
+
+# Start server
+sudo service nginx restart
