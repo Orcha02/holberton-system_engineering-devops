@@ -11,5 +11,5 @@ new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
 sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" $f_config
 sudo sed -i "/listen 80 default_server;/a error_page 404 /status404.html;" $f_config
 # Add new header to server
-sudo sed -i "/listen 80 default_server;/a add_header X-Served-By $HOSTNAME;" $f_config
+sudo sed -i "/server_name _;/a add_header X-Served-By $HOSTNAME;" $f_config
 service nginx start
