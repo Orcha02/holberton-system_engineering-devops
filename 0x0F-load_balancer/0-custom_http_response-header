@@ -3,7 +3,7 @@
 # Comments on --> 0x0C-web_server/4-not_found_page_404
 sudo apt-get update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
+# sudo ufw allow 'Nginx HTTP'
 f_config="/etc/nginx/sites-available/default"
 echo "Holberton School" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /usr/share/nginx/html/status404.html
@@ -12,4 +12,4 @@ sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me $new_site perman
 sudo sed -i "/listen 80 default_server;/a error_page 404 /status404.html;" $f_config
 # Add new header to server
 sudo sed -i "/listen 80 default_server;/a add_header X-Served-By $HOSTNAME;" $f_config
-service nginx start
+sudo service nginx restart
