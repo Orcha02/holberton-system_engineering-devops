@@ -2,10 +2,10 @@
 # Configure Nginx so that its HTTP response contains a custom header
 # Comments on --> 0x0C-web_server/4-not_found_page_404
 sudo apt-get update
-sudo apt-get -y install nginx
-# sudo ufw allow 'Nginx HTTP'
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
 f_config="/etc/nginx/sites-available/default"
-echo "Holberton School" > /var/www/html/index.html
+echo "Holberton School for the win!" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /usr/share/nginx/html/status404.html
 new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
 sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me $new_site permanent;" $f_config
