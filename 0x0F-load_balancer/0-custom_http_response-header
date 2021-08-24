@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Configure Nginx so that its HTTP response contains a custom header
 # Comments on --> 0x0C-web_server/4-not_found_page_404
+sudo apt update
+sudo apt install nginx -y
 f_config="/etc/nginx/sites-available/default"
 echo "Holberton School" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /usr/share/nginx/html/status404.html
