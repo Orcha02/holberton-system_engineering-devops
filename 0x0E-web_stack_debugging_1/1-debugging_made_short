@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Shorter script
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-pkill -9f nginx
+sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+sudo pkill -9f nginx
