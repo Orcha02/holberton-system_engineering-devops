@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Change nginx port number from 8080(sites-enabled) to 80(sites-available)
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+pkill -9f nginx
