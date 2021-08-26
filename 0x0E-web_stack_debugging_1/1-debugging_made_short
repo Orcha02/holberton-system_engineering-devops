@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# Shorter script
-sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-sudo pkill -9f nginx
+# Change nginx port number from 8080(sites-enabled) to 80(sites-available)
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx start
