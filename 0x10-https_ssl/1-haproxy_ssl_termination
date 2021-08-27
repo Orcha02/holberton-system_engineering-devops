@@ -38,13 +38,13 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend www-http
+frontend front-http
         bind *:80
         reqadd X-Forwarded-Proto:\ http
         default_backend www-backend
 
 
-frontend www-https
+frontend front-https
         bind *:443 ssl crt /etc/haproxy/certs/www.orcha.me.pem
         reqadd X-Forwarded-Proto:\ https
         acl letsencrypt-acl path_beg /.well-known/acme-challenge/
