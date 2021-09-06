@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# Block all incoming traffic but ports 22,443,80
+sudo apt-get update
+sudo apt-get install ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw enable
+--------------------------------
+# COSTUME HEADER
+# Configure Nginx so that its HTTP response contains a custom header
+# Comments on --> 0x0C-web_server/4-not_found_page_404
+sudo apt-get update
+sudo apt-get -y install nginx
+# sudo ufw allow 'Nginx HTTP'
+f_config="/etc/nginx/sites-available/default"
+echo "Holberton School" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/status404.html
+new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me $new_site permanent;" $f_config
+sudo sed -i "/listen 80 default_server;/a error_page 404 /status404.html;" $f_config
+# Add new header to server
+sudo sed -i "/listen 80 default_server;/a add_header X-Served-By $HOSTNAME;" $f_config
+sudo service nginx restart
+-------------------------------
+# Sets web servers for the deployment of web_static
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
+echo "<!DOCTYPE html>
+<head>
+</head>
+<body>
+    Holberton School
+</body>
+<html>" > /data/web_static/releases/test/index.html
+ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo chown -R ubuntu:ubuntu /data
+f_config="/etc/nginx/sites-available/default"
+sed -i "/listen 80 default_server;/a location /hbnb_static/ {alias /data/web_static/current/;}" $f_config
+sudo service nginx restart
+-----------------------------
+# Install nginx web server
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo chown -R ubuntu /var/www/
+echo "Holberton School for the win!" > /var/www/html/index.html
+sudo service nginx restart
+-----------------------------
+# Configure Nginx server so that /redirect_me is redirecting to another page.
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Configurate server (Firewall port 80)
+sudo ufw allow 'Nginx HTTP'
+
+# Create default page
+echo "Holberton School" > /var/www/html/index.html
+
+# Redirection
+new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" /etc/nginx/sites-available/default
+
+# Start server
+sudo service nginx restart
+----------------------------
+# 404 PAGE NOT FOUND REDIRECTION
+# Configure Nginx server so that /redirect_me is redirecting to another page.
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Configurate server (Firewall port 80)
+sudo ufw allow 'Nginx HTTP'
+f_config="/etc/nginx/sites-available/default"
+
+# Create default page
+echo "Holberton School for the win!" > /var/www/html/index.html
+
+# Create error
+echo "Ceci n'est pas une page" > /var/www/html/status404.html
+
+# Add redirection
+new_site="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+sudo sed -i "/listen 80 default_server/a rewrite ^/redirect_me $new_site permanent;" $f_config
+
+# Add 404 redirection (Configure your Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page')
+sudo sed -i "/listen 80 default_server;/a error_page 404 /status404.html;" $f_config
+
+# Start server
+sudo service nginx restart
