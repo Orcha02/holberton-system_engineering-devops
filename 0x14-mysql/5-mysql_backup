@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Makes a compressed MySQL dump in case of emergencies.
+name=$(date '+%d-%m-%Y')
+mysqldump -root -p"$1" --all-databases > backup.sql
+tar -zcvf "$name.tar.gz" backup.sql
