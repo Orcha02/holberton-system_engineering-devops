@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """Given employee ID, returns information about his/her TODO list progress"""
+import json
 import requests
 from sys import argv
-import json
+
 
 if __name__ == "__main__":
     user_id = argv[1]
@@ -13,7 +14,7 @@ if __name__ == "__main__":
     employee_name = employee_dict.get("name")
 
     todo = requests.get('https://jsonplaceholder.typicode.com/todos',
-                         params={'userId': user_id})
+                        params={'userId': user_id})
     todo = todo.json()
     total_todo = len(todo)
 
