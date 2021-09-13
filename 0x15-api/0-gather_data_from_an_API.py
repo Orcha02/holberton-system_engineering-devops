@@ -23,6 +23,6 @@ if __name__ == "__main__":
 
     print("Employee {} is done with tasks({}/{}):"
           .format(employee_name, total_todo_done, total_todo))
-    for info_dict in todo_done:
-        task_title = info_dict.get("title")
+    for task in todo_done:
+        task_title = task.get("title")
         print("\t " + task_title)
