@@ -17,12 +17,16 @@ if __name__ == "__main__":
                         params={'userId': user_id})
     todo = todo.json()
 
-    todo_done = list(task for task in todo if task['userId'] == int(user_id))
-    total_todo_done = list(task for task in todo if task['completed'] is True)
+    my_dict = {}
+    my_list = []
 
+    for task in todo:
+        employee_task = {}
+        employee_task['username'] = user_name
+        employee_task['task'] = task.get('title')
+        employee_task['completed'] = task.get('completed')
+        my_list.append(employee_task)
+
+    my_dict[user_id] = my_list
     with open('{}.json'.format(user_id), 'w') as json_file:
-        json.dump({user_id: [{
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": user_name
-                } for task in todo]}, json_file)
+        json.dump(my_dict, json_file)
