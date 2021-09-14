@@ -16,10 +16,9 @@ if __name__ == "__main__":
     todo = requests.get('https://jsonplaceholder.typicode.com/todos',
                         params={'userId': user_id})
     todo = todo.json()
-    total_todo = len(todo)
 
-    todo_done = [task for task in todo if task['completed'] is True]
-    total_todo_done = len(todo_done)
+    todo_done = list(task for task in todo if task['userId'] == int(user_id))
+    total_todo_done = list(task for task in todo if task['completed'] is True)
 
     with open('{}.json'.format(user_id), 'w') as json_file:
         json.dump({user_id: [{
