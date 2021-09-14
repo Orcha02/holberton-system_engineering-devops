@@ -22,5 +22,5 @@ if __name__ == "__main__":
         csvWriter = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for task in todo:
             csvWriter.writerow([user_id, user_name,
-                                 str(task.get('completed')),
-                                 task.get('title')])
+                                str(task.get('completed')),
+                                task.get('title')])
