@@ -1,37 +1,32 @@
 #!/usr/bin/python3
 """Export data in the JSON format"""
-
 import json
 import requests
 
 
-def search_and_export_json():
-    """Export data in the JSON format"""
+if __name__ == '__main__':
+    all_employees = {}
 
-    url = 'https://jsonplaceholder.typicode.com/'
+    users = requests.get('https://jsonplaceholder.typicode.com/users').json()
 
-    users_dict = requests.get("{}users".format(url)).json()
-    tasks_dict = requests.get("{}todos".format(url)).json()
+    for user in users:
 
-    my_dict = {}
-    usernames_dict = {}
+        user_id = user.get('id')
+        username = user.get('username')
 
-    for info in users_dict:
-        user_id = info.get('id')
-        my_dict[user_id] = []
-        usernames_dict[user_id] = info.get('username')
+        all_todos = []
 
-    for info in tasks_dict:
-        tasks_all_emp = {}
-        user_id = info.get('userId')
-        tasks_all_emp["task"] = info.get('title')
-        tasks_all_emp["completed"] = info.get('completed')
-        tasks_all_emp["username"] = usernames_dict.get(user_id)
-        my_dict.get(user_id).append(tasks_all_emp)
+        todos = requests.get('https://jsonplaceholder.typicode.com/todos',
+                             params={'userId': user_id}).json()
 
-    file_name = "todo_all_employees.json"
-    with open(file_name, mode='w') as json_file:
-        json.dump(my_dict, json_file)
+        for task in todos:
+            todo = {}
+            todo['username'] = username
+            todo['task'] = task.get('title')
+            todo['completed'] = task.get('completed')
+            all_todos.append(todo)
 
-if __name__ == "__main__":
-    search_and_export_json()
+        all_employees[user_id] = all_todos
+
+    with open('todo_all_employees.json', 'w') as f:
+        json.dump(all_employees, f)
