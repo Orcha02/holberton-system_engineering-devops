@@ -21,5 +21,6 @@ if __name__ == "__main__":
     with open('{}.csv'.format(user_id), 'w') as csv_file:
         csvWriter = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for task in todo:
-            csv.Writer.writerow([user_id, user_name, str(task.get('completed')),
-                            task.get('title')])
+            csvWriter.writerow([user_id, user_name,
+                                 str(task.get('completed')),
+                                 task.get('title')])
